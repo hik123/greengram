@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 public class UserService {
     private final UserMapper mapper;
 
-    public int userIns(UserInsDto dto) {
-        return mapper.userIns(dto);
+    public int insUser(UserInsDto dto) {
+        return mapper.insUser(dto);
     }
     public ResVo signin(UserSigninDto dto) {
         int result = 3;

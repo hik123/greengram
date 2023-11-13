@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface UserMapper {
 
-    int userIns(UserInsDto dto);
+    int insUser(UserInsDto dto);
 
     String selUserByUid(String uid);
 }
