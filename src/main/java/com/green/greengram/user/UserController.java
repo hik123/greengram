@@ -3,6 +3,7 @@ package com.green.greengram.user;
 import com.green.greengram.ResVo;
 import com.green.greengram.user.model.UserInsDto;
 import com.green.greengram.user.model.UserSigninDto;
+import com.green.greengram.user.model.UserSigninVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,11 +22,10 @@ public class UserController {
         return new ResVo(result);
     }
     @PostMapping("/signin")
-    public ResVo login(@RequestBody UserSigninDto dto) {
+    public UserSigninVo login(@RequestBody UserSigninDto dto) {
         System.out.println(dto);
         return service.signin(dto);
     }
-
 
     // http://localhost:8080/api/user/signin
     //1: 아이디/비번 맞췄음, 2: 아이디 없음, 3: 비밀번호 다름
