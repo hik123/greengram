@@ -24,10 +24,17 @@ public class FeedController {
         return service.insFeed(dto);
     }
 
+    @GetMapping("/{targetIuser}")
+    public List<FeedSelVo> getMyFeed(@PathVariable int targetIuser, int page, int loginedIuser) {
+        System.out.println(page);
+        return service.getFeed(page, loginedIuser, targetIuser);
+    }
+                // localhost:8080/api/feed/ 3     ? iuser=1&page=1
+                //                        targetiuser값,
     @GetMapping
     public List<FeedSelVo> getFeed(int page, int iuser) {
         System.out.println(page);
-        return service.getFeed(page, iuser);
+        return service.getFeed(page, iuser, 0); //0:false (없다는 의미로 0 사용)
     }
 
     @GetMapping("/{ifeed}/fav")

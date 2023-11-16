@@ -29,22 +29,23 @@ public class FeedService {
         return new ResVo(pDto.getIfeed());
     }
 
-    public List<FeedSelVo> getFeed(int page, int iuser) {
+    public List<FeedSelVo> getFeed(int page, int loginedIuser, int targetIuser) {
         final int ROW_COUNT = 30;
         FeedSelDto dto = FeedSelDto.builder()
-                .iuser(iuser)
+                .targetIuser(targetIuser)
+                .loginedIuser(loginedIuser)
                 .startIdx((page - 1) * ROW_COUNT)
                 .rowCount(ROW_COUNT)
                 .build();
         List<FeedSelVo> feedSelVoList = mapper.selFeed(dto);
         // 페이지 구현
-        List<Integer> iFeedList = new ArrayList();
+        List<Integer> iFeedList = new ArrayList(); //부분부분 페이징처리되기때문에
         Map<Integer, FeedSelVo> feedMap = new HashMap();
         for(FeedSelVo vo : feedSelVoList) {
             System.out.println(vo);
-            iFeedList.add(vo.getIfeed());
-            feedMap.put(vo.getIfeed(), vo);
-        }
+            iFeedList.add(vo.getIfeed()); //ifeed값을 계속 담고있음
+            feedMap.put(vo.getIfeed(), vo); // feedMap key값과 밸류로 이루어짐
+        }               //
         System.out.println("--------------");
         if(iFeedList.size() >0) {
             List<FeedPicsVo> feedPicsList = mapper.selFeedPics(iFeedList);
@@ -52,8 +53,8 @@ public class FeedService {
             for (FeedPicsVo vo : feedPicsList) {
                 FeedSelVo feedVo = feedMap.get(vo.getIfeed());
                 feedVo.getPics().add(vo.getPic());
-               // List<String> strPicsList = feedVo.getPics();
-               // strPicsList.add(vo.getPic());
+                List<String> strPicsList = feedVo.getPics();
+                strPicsList.add(vo.getPic());
             }
         }
         return feedSelVoList;

@@ -2,6 +2,7 @@ package com.green.greengram.user;
 
 import com.green.greengram.ResVo;
 import com.green.greengram.user.model.UserInsDto;
+import com.green.greengram.user.model.UserProfileInfoVo;
 import com.green.greengram.user.model.UserSigninDto;
 import com.green.greengram.user.model.UserSigninVo;
 import lombok.RequiredArgsConstructor;
@@ -21,15 +22,32 @@ public class UserController {
         int result = service.insUser(dto);
         return new ResVo(result);
     }
-    @PostMapping("/signin")
+    @PostMapping("/signin")                     // localhost:8080/api/user/signin
     public UserSigninVo login(@RequestBody UserSigninDto dto) {
         System.out.println(dto);
         return service.signin(dto);
     }
 
-    // http://localhost:8080/api/user/signin
-    //1: 아이디/비번 맞췄음, 2: 아이디 없음, 3: 비밀번호 다름
+    // api/user/2/mike/3
+    // api/user/3/john/45
+    @GetMapping("/{targetIuser}")
+    public UserProfileInfoVo getUserProfileInfo (@PathVariable int targetIuser) {
+        return service.getUserProfileInfo(targetIuser);                 // 보낼 값이 여러개일때는 객체에 담아서 주소값을 보냄
+    }
+    // postman(get, params) >>  http://localhost:8080/api/user/{targetIuser}
 
+
+    /* ----------------------------------------------------------------------------
+    @GetMapping("/{iuser}/{name}/{ifeed}")   // {} 여러개일때 @PathVariable 각각 넣어야됨
+    public int getUser (@PathVariable int iuser, @PathVariable String name ,@PathVariable int ifeed) {
+        return 0;
+    }
+
+    @GetMapping("/{iuser}/{ifeed}")
+    public int getUser (@PathVariable int iuser, @PathVariable int ifeed) {
+        return 0;
+    }
+    */
 }
-    //
+
 
